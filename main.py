@@ -28,7 +28,9 @@ CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 TOP_K = 10
 RERANK_TOP_K = 5
-
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+if not GOOGLE_API_KEY:
+    raise ValueError("Missing GOOGLE_API_KEY environment variable")
 # Đảm bảo thư mục tồn tại
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(CHROMA_DB_DIR, exist_ok=True)
@@ -405,17 +407,3 @@ def get_file(filename: str):
         return {"error": "File not found"}
     return FileResponse(path=file_path, filename=filename, media_type="application/pdf")
 
-
-if __name__ == "__main__":
-
-    load_dotenv()
-    if not os.getenv("GOOGLE_API_KEY"):
-        print("⚠️  Cảnh báo: Chưa set GOOGLE_API_KEY")
-
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
-        workers=1
-    )
