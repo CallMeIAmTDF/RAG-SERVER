@@ -20,11 +20,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          IMAGE_TAG=${GITHUB_SHA::7}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/rag-server:$IMAGE_TAG -t ${{ secrets.DOCKER_USERNAME }}/rag-server:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rag-server:latest .
 
       - name: Push Docker image
         run: |
-          IMAGE_TAG=${GITHUB_SHA::7}
-          docker push ${{ secrets.DOCKER_USERNAME }}/rag-server:$IMAGE_TAG
           docker push ${{ secrets.DOCKER_USERNAME }}/rag-server:latest
